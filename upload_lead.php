@@ -1,4 +1,3 @@
-1
 <?php require_once('functions/db_function.php') ?>
 <script type="text/javascript" src="js/library.js"></script>
 <?php require_once('action_files/opreation.js') ?>
