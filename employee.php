@@ -5,7 +5,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <?php //require_once('template_module/top_nav.php'); ?>
+        <?php require_once('template_module/top_nav.php'); ?>
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">

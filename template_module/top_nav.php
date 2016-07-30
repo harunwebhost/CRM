@@ -235,16 +235,25 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="upload_lead.php"><i class="fa fa-dashboard fa-fw"></i>Upload Leads</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                    <a href="upload_lead.php">New Leads</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Morris.js Charts</a>
+                                    <a href="index.php">Total Leads</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">Assined Lead</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">Un Assinded Leads</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">Fresh Leads</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

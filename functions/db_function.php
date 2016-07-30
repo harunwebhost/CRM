@@ -6,7 +6,7 @@ $connection = mysqli_connect('localhost', 'root', '');
 if (!$connection) {
     die("Connection failed: " . mysql_error());
 }else{
-  mysqli_select_db($connection,'amruth_testing');
+  mysqli_select_db($connection,'crm');
 
 }
 return $connection; 
@@ -145,8 +145,46 @@ function page_redirection($pagename,$message){
 		}
 	}
 
-
+function show_leads($emp){
+	if(empty($emp)){
+	$sql_lead="SELECT * FROM leads";
+	}else{
+		$sql_lead="SELECT * FROM leads";		
+	}
+	$sql_query=execute_sql_query($sql_lead);
+	while($fetch_lead=execute_fetch($sql_query)){
+                                        
 ?>
+
+                                        <tr class="odd gradeX">
+                                         <td><input type="checkbox"></td>
+                                            <td><?php echo $fetch_lead['lead_name'];?></td>
+                                            <td><?php echo $fetch_lead['lead_email'];?></td>
+                                            <td><?php echo $fetch_lead['lead_mobile'];?></td>
+                                            <td class="center"><?php echo $fetch_lead['lead_city'];?></td>
+                                            <td class="center"><?php echo $fetch_lead['lead_from'];?></td>
+                                            <td class="center"><?php echo $fetch_lead['emp_id'];?></td>
+                                            <td class="center"><?php echo $fetch_lead['lead_status'];?></td>
+                                            <td class="center"><div class="btn-group">
+                                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div></td>
+                                        </tr>
+                                    
+<?php } } ?>
 
 
 
