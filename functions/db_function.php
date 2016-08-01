@@ -61,13 +61,13 @@ function convert_underscore_into_spaces($title){
 	return str_replace('_', ' ', $title);
 }
 	/*get the main pages*/
-	function get_main_pages($id){
+	function select_emp($id){
 		
-			$sql="select * from mainpage"; 
+			$sql="select * from employer"; 
 			$result=execute_sql_query($sql);
-			while ($mainpage=execute_fetch($result)) {
+			while ($emp=execute_fetch($result)) {
 			?>
-			<option value="<?php echo $mainpage['mainpage_id'] ?>" <?php if($mainpage['mainpage_id']==$id){echo "selected"; } ?>><?php echo $mainpage['title']?></option>
+			<option value="<?php echo $emp['emp_id'] ?>" <?php if($emp['emp_id']==$id){echo "selected"; } ?>><?php echo $emp['emp_name']?></option>
 		<?php }
 	}
 
@@ -145,16 +145,83 @@ function page_redirection($pagename,$message){
 		}
 	}
 
-function show_leads($emp){
-	if(empty($emp)){
-	$sql_lead="SELECT * FROM leads";
-	}else{
-		$sql_lead="SELECT * FROM leads";		
-	}
-	$sql_query=execute_sql_query($sql_lead);
-	while($fetch_lead=execute_fetch($sql_query)){
-                                        
+
+
+function show_leads(){
+			if(isset($_GET['assigned'])){
+                    //echo "assigned".$assined=$_GET['assigned'];
+                $sql_lead="SELECT * FROM leads tbl_leads, employer tble_employer WHERE lead_status='Assiged' && tbl_leads.emp_id=tble_employer.emp_id";
+                $label="Total Assigned";
+                }elseif (isset($_GET['un-assigned'])) {
+                   // echo "un-assigned".$unsinded=$_GET['un-assigned'];
+                 $sql_lead="SELECT * FROM leads WHERE lead_status='un-Assiged'";
+               	 $label="Total Un-Assiged Leads";
+                }elseif (isset($_GET['uploaded'])) {
+                   echo "uploaded".$uploaded=$_GET['uploaded'];
+   					$label="New Uploaded Leads";             	
+                }else
+                {
+           	 $sql_lead="SELECT * FROM leads tbl_leads ";
+                	
+                		$label="Total Leads";
+                }
+
 ?>
+	 <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><?php echo $label;?> </h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+	 <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> <?php echo $label;?>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#" data-toggle="modal" data-target="#lead_modal" data-whatever="@mdo"></i> Add New</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                           <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                         <th></th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>City</th>
+                                            <th>From</th>
+                                            <th>Employee</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>	
+					<?php 
+						$sql_query=execute_sql_query($sql_lead);
+						while($fetch_lead=execute_fetch($sql_query)){
+					?>
 
                                         <tr class="odd gradeX">
                                          <td><input type="checkbox"></td>
@@ -163,7 +230,18 @@ function show_leads($emp){
                                             <td><?php echo $fetch_lead['lead_mobile'];?></td>
                                             <td class="center"><?php echo $fetch_lead['lead_city'];?></td>
                                             <td class="center"><?php echo $fetch_lead['lead_from'];?></td>
-                                            <td class="center"><?php echo $fetch_lead['emp_id'];?></td>
+                                            <td class="center">
+
+                                            <?php 
+                                            	if(isset($fetch_lead['emp_name'])){
+                                            	echo $fetch_lead['emp_name'];
+                                            } else{
+                                            	echo "--";
+                                            }
+                                            ?>
+                                            	
+
+                                            </td>
                                             <td class="center"><?php echo $fetch_lead['lead_status'];?></td>
                                             <td class="center"><div class="btn-group">
                                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -186,7 +264,124 @@ function show_leads($emp){
                                     
 <?php } } ?>
 
+  </tbody>
+                                </table>
+                            </div>
+                          
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                  
+                 
+                </div>
+               
+            </div>
 
 
+  <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
 
 
+<?php function employee(){
+
+$sql_lead="SELECT * FROM employer";
+$label="Employee";
+?>
+ <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><?php echo $label;?> </h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+     <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user"></i> <?php echo $label;?>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo"><i class="fa fa-user"></i> Add New</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                           <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                         <th></th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Action</th>
+                                           </tr>
+                                    </thead>
+                                    <tbody> 
+                    <?php 
+                        $sql_query=execute_sql_query($sql_lead);
+                        while($fetch_lead=execute_fetch($sql_query)){
+                    ?>
+
+                                        <tr class="odd gradeX">
+                                         <td><input type="checkbox"></td>
+                                            <td><?php echo $fetch_lead['emp_name'];?></td>
+                                            <td><?php echo $fetch_lead['emp_email'];?></td>
+                                            <td><?php echo $fetch_lead['emp_mobile'];?></td>
+                                            <td class="center"><div class="btn-group">
+                                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href=""><i class="fa fa-trash"></i></a>
+                                        </li>
+                                        <!--<li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>-->
+                                    </ul>
+                                </div></td>
+                                        </tr>
+                                    
+<?php } ?>
+
+  </tbody>
+                                </table>
+                            </div>
+                          
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                  
+                 
+                </div>
+               
+            </div>
+
+
+  <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+<?php } ?>

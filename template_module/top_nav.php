@@ -6,7 +6,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="index.html">Customer Relationship Management</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -224,37 +224,50 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
+                            <!-- <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                            </div>
+                            </div> -->
                             <!-- /input-group -->
                         </li>
                         <li>
                             <a href="upload_lead.php"><i class="fa fa-dashboard fa-fw"></i>Upload Leads</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Lead Information<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                            <li>
+                                        </li>
                                 <li>
-                                    <a href="upload_lead.php">New Leads</a>
+                                    <a href="upload_lead.php">Upload</a>
                                 </li>
                                 <li>
-                                    <a href="index.php">Total Leads</a>
+                                    <a href="index.php?total=1">Total</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Assined Lead</a>
+                                    <a href="index.php?assigned=1">Assined</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Un Assinded Leads</a>
+                                    <a href="index.php?un-assigned=1">Un-Assinded</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Fresh Leads</a>
+                                    <a href="index.php?uploaded=1">Uploaded Leads</a>
                                 </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-user"></i> Employees<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+                                <li>
+                                    <a href="show_employees.php">All</a>
+                                </li>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
