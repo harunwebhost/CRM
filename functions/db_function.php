@@ -6,7 +6,7 @@ $connection = mysqli_connect('localhost', 'root', '');
 if (!$connection) {
     die("Connection failed: " . mysql_error());
 }else{
-  mysqli_select_db($connection,'crm');
+  mysqli_select_db($connection,'amruth_testing');
 
 }
 return $connection; 

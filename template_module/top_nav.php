@@ -40,6 +40,9 @@
                         <li>
                             <a href="upload_lead.php"><i class="fa fa-dashboard fa-fw"></i>Upload Leads</a>
                         </li>
+                          <li>
+                            <a href="assign_form.php"><i class="fa fa-dashboard fa-fw"></i>Assign Lead</a>
+                        </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Lead Information<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
