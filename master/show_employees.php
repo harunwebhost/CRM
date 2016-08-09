@@ -1,18 +1,18 @@
 
-<?php require_once('template_module/head_section.php'); ?>
+<?php require_once('../template_module/head_section.php'); ?>
 <body>
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <?php require_once('template_module/top_nav.php'); ?>
+        <?php require_once('../template_module/top_nav.php'); ?>
        
           <?php //require_once('template_module/dash.php'); ?>
             <!-- /.row -->
             <?php //require_once('template_module/show_lead.php'); ?>
 
             <?php 
-                employee();
+                employee(logged_user_id());
             ?>
 
 
@@ -60,4 +60,4 @@
 </div>
 
 
-   <?php require_once('template_module/footer.php'); ?>
+   <?php require_once('../template_module/footer.php'); ?>

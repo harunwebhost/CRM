@@ -147,24 +147,40 @@ function page_redirection($pagename,$message){
 
 
 
-function show_leads(){
-			if(isset($_GET['assigned'])){
-                    //echo "assigned".$assined=$_GET['assigned'];
+function show_leads($emp_id,$user_type){
+
+
+
+            if($user_type=="master" && $emp_id="master"){
+                    if(isset($_GET['assigned'])){
+                //echo "assigned".$assined=$_GET['assigned'];
                 $sql_lead="SELECT * FROM leads tbl_leads, employer tble_employer WHERE lead_status='Assiged' && tbl_leads.emp_id=tble_employer.emp_id";
                 $label="Total Assigned";
                 }elseif (isset($_GET['un-assigned'])) {
                    // echo "un-assigned".$unsinded=$_GET['un-assigned'];
                  $sql_lead="SELECT * FROM leads WHERE lead_status='un-Assiged'";
-               	 $label="Total Un-Assiged Leads";
+                 $label="Total Un-Assiged Leads";
                 }elseif (isset($_GET['uploaded'])) {
                    echo "uploaded".$uploaded=$_GET['uploaded'];
-   					$label="New Uploaded Leads";             	
+                    $label="New Uploaded Leads";                
                 }else
                 {
-           	 $sql_lead="SELECT * FROM leads tbl_leads ";
-                	
-                		$label="Total Leads";
+             $sql_lead="SELECT * FROM leads tbl_leads ";
+                    $label="Total Leads";
                 }
+            }
+			else
+            {
+                $emp_id=sql_injection($emp_id);
+               if(isset($_GET['assigned'])){
+                    //echo "assigned".$assined=$_GET['assigned'];
+                 $sql_lead="SELECT * FROM leads WHERE lead_status='Assiged' && emp_id='$emp_id'";
+                $label="Total Assigned";
+                }else{
+                    $sql_lead="SELECT * FROM leads WHERE emp_id='$emp_id'";
+                    $label="Total Leads";
+                } 
+            }
 
 ?>
 	 <div id="page-wrapper">
@@ -180,25 +196,28 @@ function show_leads(){
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> <?php echo $label;?>
-                            <div class="pull-right">
+                            <?php
+                                if($user_type=="master"){
+                                    ?>
+                                        <div class="pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                                         Actions
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
+                                        <li class="divider"></li>
                                         <li><a href="#" data-toggle="modal" data-target="#lead_modal" data-whatever="@mdo"></i> Add New</a>
                                         </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
+                                       
                                         <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
+                                      
                                     </ul>
                                 </div>
                             </div>
+                                <?php 
+                            }
+                             ?>
                         </div>
                         <!-- /.panel-heading -->
                            <div class="panel-body">
@@ -286,8 +305,7 @@ function show_leads(){
     <!-- /#wrapper -->
 
 
-<?php function employee(){
-
+<?php function employee($emp_id){
 $sql_lead="SELECT * FROM employer";
 $label="Employee";
 ?>
@@ -385,3 +403,23 @@ $label="Employee";
     <!-- /#wrapper -->
 
 <?php } ?>
+
+<?php function check_session(){
+        if(!isset($_SESSION['login_username']) && !isset($_SESSION['login_userntype'])){
+            page_redirection("../index.php",'Login Once Again');
+        }
+} 
+
+function logged_user_id(){
+    if(isset($_SESSION['login_username'])){
+        $login_email=sql_injection($_SESSION['login_email']);
+        $get_select_user="SELECT * FROM employer WHERE emp_email='$login_email'";
+        $get_select_user_execute=execute_sql_query($get_select_user);
+        $get_logged_user_array=execute_fetch($get_select_user_execute);
+       return $get_logged_user_id=$get_logged_user_array['emp_id'];
+    }
+
+}    
+
+
+?>
