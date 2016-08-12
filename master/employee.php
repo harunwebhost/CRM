@@ -1,11 +1,11 @@
 
-<?php require_once('template_module/head_section.php'); ?>
+<?php require_once('../template_module/head_section.php'); ?>
 <body>
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <?php require_once('template_module/top_nav.php'); ?>
+        <?php require_once('../template_module/top_nav.php'); ?>
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -105,4 +105,4 @@
     </div>
     <!-- /#wrapper -->
 
-   <?php require_once('template_module/footer.php'); ?>
+   <?php require_once('../template_module/footer.php'); ?>

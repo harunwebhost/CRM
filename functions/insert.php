@@ -31,9 +31,8 @@ $message="Record is Inserted";
    
 $values=rtrim($values,',');
 $keys=rtrim($keys,',');
+$sql = "INSERT INTO $table ($keys) VALUES ($values)";
 
-
- $sql = "INSERT INTO $table ($keys) VALUES ($values)";
  if($table=="employer"){
   $sql_login = "INSERT INTO users (`user_id`,`user_name`,`user_email`,`user_password`,`user_type`,`status`) VALUES (null,$values,'emplyee','1')";
    execute_sql_query($sql_login); 
@@ -43,7 +42,7 @@ $keys=rtrim($keys,',');
 }
 if (execute_sql_query($sql)) {
  //   echo $message;
-page_redirection('../index.php',"Record is Inserted");
+page_redirection('../master/index.php',"Record is Inserted");
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }

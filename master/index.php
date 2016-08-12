@@ -25,7 +25,7 @@
         <h4 class="modal-title" id="exampleModalLabel">Create New Lead</h4>
       </div>
       <div class="modal-body">
-        <form action="functions/insert.php" method="POST">
+        <form action="../functions/insert.php" method="POST">
         <input type="hidden" class="form-control" id="recipient-name" name="table_name" value="leads">
          <input type="hidden" class="form-control" id="recipient-name" name="action" value="add">
 
@@ -46,11 +46,20 @@
             <input type="text" class="form-control" id="recipient-name" name="page[lead_city]">
           </div>
            <div class="form-group">
-  <label for="sel1">Assign</label>
-        <select class="form-control" id="sel1" name="page[emp_id]">
-           <?php select_emp(''); ?>
-      </select>
+        <label for="sel1">Assign</label>
+              <select class="form-control" id="sel1" name="page[emp_id]">
+                  <?php select_emp(''); ?>
+        </select>
 </div>
+
+            <div class="form-group">
+            <input type="hidden" class="form-control" id="recipient-name" name="page[lead_status]" value="assigned">
+          </div>
+           <div class="form-group">
+            <input type="hidden" class="form-control" id="recipient-name" name="page[lead_from]" value="master">
+          </div>
+
+          
            
           
          

@@ -1,6 +1,6 @@
-<?php require_once('functions/db_function.php') ?>
+<?php require_once('../functions/db_function.php') ?>
 <!-- <script type="text/javascript" src="js/library.js"></script>
-<?php require_once('action_files/opreation.js') ?>
+<?php //require_once('../action_files/opreation.js') ?>
 <script type="text/javascript">
 	
 </script>
@@ -8,23 +8,29 @@
 
 <?php
 
-require_once('functions/db_function.php'); 
+//require_once('functions/db_function.php'); 
 ini_set("display_errors",1);
  	if(isset($_POST['submit'])){
  		 	$fileName=strtotime("now").$_FILES['uplaod']['name'];
  		 	$templocation=$_FILES['uplaod']['tmp_name'];
- 		 	$targetPath="uploadedfiles/";
+ 		 	$targetPath="../uploadedfiles/";
  		 	$targetPath=$targetPath.basename($fileName);
 	 		move_uploaded_file($templocation,$targetPath); 
 	 		 $fileName=$targetPath;
 	 		
 	 		$dublicateFile="";
  			if (!empty($fileName)) {
+
  				$fileExtention=explode('.',$fileName);
+ 						echo $fileExtention[1];
+ 				die();
  					if ($fileExtention[1]=="csv") {
+ 						echo $fileExtention[1];
+ 				
  							
  							$open_file=fopen($fileName, "r");
  							$skipHeading=0;
+ 							$count=0;
  							$failed = [];
  								$faild_leads="";
  							while($fileData=fgetcsv($open_file,30000,",")){
@@ -35,7 +41,8 @@ ini_set("display_errors",1);
  								$city=$fileData[3];
  								$leadFrom=$fileData[4];
  								$employeeId=$fileData[5];
- 								$dublicateFile="uploadfailed/".strtotime("now").".csv";
+ 								 $dublicateFile="../uploadfailed/".strtotime("now").".csv";
+ 								
  								$opendublicateFile=fopen($dublicateFile, "w");	
  								$lables="Name".",Email".",Mobile".",City,"."From Leaad,"."EmployeeId,"."\n";
  								if ($skipHeading!=1) {
@@ -57,6 +64,7 @@ ini_set("display_errors",1);
 	$faild_leads.=$fetch_dublicate_leads["lead_name"].",".$fetch_dublicate_leads["lead_email"].",".$fetch_dublicate_leads["lead_mobile"].",".$fetch_dublicate_leads["lead_city"].",".$fetch_dublicate_leads["lead_from"].",".$getEmployerName."\n";
  											
  										}else{
+ 											$count=0;
  												if (empty($employeeId)) {
  													$leadStatus="Not assined";
  												}else{
@@ -76,10 +84,10 @@ ini_set("display_errors",1);
  					}else{
  				echo "...";
  				}
- 				if ($count>0) {
+ 				/*if ($count>0) {
  					upload_error('Uploaded failed Records','success');
  					echo "<a href=$dublicateFile>Download Faild</a>";
- 				}
+ 				}*/
  				
  			}
  			else{

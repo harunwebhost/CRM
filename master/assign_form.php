@@ -18,7 +18,7 @@
 
 
 <?php 
-	$unassing="SELECT * FROM leads WHERE lead_status='un-Assiged'";
+	 $unassing="SELECT * FROM leads WHERE lead_status='un-Assiged'";
 	$result=execute_sql_query($unassing);
 	$total_unassinged=sql_fetch_num_rows($result);
 	

@@ -24,7 +24,7 @@
         <h4 class="modal-title" id="exampleModalLabel">New Account</h4>
       </div>
       <div class="modal-body">
-        <form action="functions/insert.php" method="POST">
+        <form action="../functions/insert.php" method="POST">
         <input type="hidden" class="form-control" id="recipient-name" name="table_name" value="employer">
          <input type="hidden" class="form-control" id="recipient-name" name="action" value="employer">
 

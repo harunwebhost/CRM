@@ -6,13 +6,14 @@ $connection = mysqli_connect('localhost', 'root', '');
 if (!$connection) {
     die("Connection failed: " . mysql_error());
 }else{
-  mysqli_select_db($connection,'amruth_testing');
+  mysqli_select_db($connection,'crm');
 
 }
 return $connection; 
 }
 	/*sql query functions*/
 	function execute_sql_query($sql){
+       
 		$connection=db_connection();
 		$result=mysqli_query($connection,$sql);
 		
@@ -81,45 +82,6 @@ function shor_information($data,$limit){
 	 return implode(" ",$words);
 }
 
-function footer_menus($table,$limit){
-	?>
-		<ul>
-			<?php 
-			if (isset($limit)) {
-			$sql="SELECT * FROM $table LIMIT $limit" ;	
-			}else{
-			$sql="SELECT * FROM $table";
-			}
-			$result=execute_sql_query($sql);
-			
-			while ($menus=execute_fetch($result)) {
-				if($table=="mainpage"){
-					$menus_title=convert_spaces_into_underscore($menus['title']);
-					$diplay_title=convert_underscore_into_spaces($menus['title']);
-					$page="content.php?title=$menus_title";
-					$url=create_url($page,$diplay_title);		
-				}
-				if($table=="pricing"){
-					$menus_title=convert_spaces_into_underscore($menus['plan_name']);
-					$diplay_title=convert_underscore_into_spaces($menus['plan_name']);
-					$page="content.php?title=$menus_title"."&pricing_id=".$menus['pricing_id'];
-					$url=create_url($page,$diplay_title);	
-				}
-				if($table=="services"){
-					$menus_title=convert_spaces_into_underscore($menus['services_name']);
-					$diplay_title=convert_underscore_into_spaces($menus['services_name']);
-					$page="content.php?title=$menus_title"."&service_id=".$menus['services_id'];
-					$url=create_url($page,$diplay_title);	
-				}
-			?>
-			<li>
-				<?php echo $url; ?>
-			</li>
-			<?php  }?>
-		</ul>
-	<?php
-}
-
 function create_url($page,$menus_title){
 $url =<<<EOD
 <a href="{$page}">{$menus_title}</a>
@@ -148,37 +110,58 @@ function page_redirection($pagename,$message){
 
 
 function show_leads($emp_id,$user_type){
-
-
-
-            if($user_type=="master" && $emp_id="master"){
+              
+                if($user_type=="master" && $emp_id="master"){
                     if(isset($_GET['assigned'])){
-                //echo "assigned".$assined=$_GET['assigned'];
-                $sql_lead="SELECT * FROM leads tbl_leads, employer tble_employer WHERE lead_status='Assiged' && tbl_leads.emp_id=tble_employer.emp_id";
-                $label="Total Assigned";
-                }elseif (isset($_GET['un-assigned'])) {
-                   // echo "un-assigned".$unsinded=$_GET['un-assigned'];
-                 $sql_lead="SELECT * FROM leads WHERE lead_status='un-Assiged'";
-                 $label="Total Un-Assiged Leads";
-                }elseif (isset($_GET['uploaded'])) {
-                   echo "uploaded".$uploaded=$_GET['uploaded'];
-                    $label="New Uploaded Leads";                
-                }else
-                {
-             $sql_lead="SELECT * FROM leads tbl_leads ";
-                    $label="Total Leads";
-                }
+                      $sql_lead="SELECT * FROM leads tbl_leads, employer tble_employer 
+                        WHERE 
+                        tbl_leads.lead_status='assigned'
+                            AND 
+                        tbl_leads.emp_id=tble_employer.emp_id";
+                        $label="Total Assigned";
+                       
+                        }
+                    elseif (isset($_GET['un-assigned'])) {
+                               // echo "un-assigned".$unsinded=$_GET['un-assigned'];
+                             $sql_lead="SELECT * FROM leads WHERE lead_status='un-Assiged'";
+                             $label="Total Un-Assiged Leads";
+                             
+                    }elseif (isset($_GET['uploaded'])) {
+                           echo "uploaded".$uploaded=$_GET['uploaded'];
+                            $label="New Uploaded Leads";         
+                            
+                     }else
+                
+                     {
+                             $sql_lead="SELECT * FROM leads tbl_leads  ";
+                            $label="Total Leads";
+                            
+                    }
             }
 			else
             {
                 $emp_id=sql_injection($emp_id);
                if(isset($_GET['assigned'])){
                     //echo "assigned".$assined=$_GET['assigned'];
-                 $sql_lead="SELECT * FROM leads WHERE lead_status='Assiged' && emp_id='$emp_id'";
-                $label="Total Assigned";
+              
+                  $sql_lead="SELECT * FROM leads tbl_leads, employer tble_employer 
+                        WHERE 
+                        tbl_leads.emp_id='$emp_id'
+                        AND 
+                        tbl_leads.lead_status='assigned'
+                        AND
+                        tble_employer.emp_id='$emp_id'  
+                        ";
+
+                 $label="Total Assigned";
                 }else{
-                    $sql_lead="SELECT * FROM leads WHERE emp_id='$emp_id'";
-                    $label="Total Leads";
+                  $sql_lead="SELECT * FROM leads tbl_leads, employer tble_employer 
+                        WHERE 
+                        tbl_leads.emp_id='$emp_id'
+                        AND
+                        tble_employer.emp_id='$emp_id'  
+                        ";
+                     $label="Total";
                 } 
             }
 
@@ -238,7 +221,7 @@ function show_leads($emp_id,$user_type){
                                     </thead>
                                     <tbody>	
 					<?php 
-						$sql_query=execute_sql_query($sql_lead);
+						 $sql_query=execute_sql_query($sql_lead);
 						while($fetch_lead=execute_fetch($sql_query)){
 					?>
 
@@ -262,13 +245,38 @@ function show_leads($emp_id,$user_type){
 
                                             </td>
                                             <td class="center"><?php echo $fetch_lead['lead_status'];?></td>
-                                            <td class="center"><div class="btn-group">
+                                            <td class="center">
+                                                <?php
+                                                    if($user_type=="master"){
+                                                        ?>
+                                                    <div class="btn-group">
+                                                                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                                    Masteroption
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right" role="menu">
+                                                                    <li><a href="#">Action</a>
+                                                                    </li>
+                                                                    <li><a href="#">Another action</a>
+                                                                    </li>
+                                                                    <li><a href="#">Something else here</a>
+                                                                    </li>
+                                                                    <li class="divider"></li>
+                                                                    <li><a href="#">Separated link</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                    <?php 
+                                                        }else{?>
+
+                                                        <div class="btn-group">
                                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
+                                        Employee option
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
+                                    <li><a href="#" data-toggle="modal" data-target="#open_lead" data-whatever="@mdo"><i class="fa fa-user"></i>Open</a>
+                                        </li>
                                         </li>
                                         <li><a href="#">Another action</a>
                                         </li>
@@ -278,7 +286,12 @@ function show_leads($emp_id,$user_type){
                                         <li><a href="#">Separated link</a>
                                         </li>
                                     </ul>
-                                </div></td>
+                                </div>        
+                                                   <?php 
+                                                    }
+                                                 ?>
+
+                                            </td>
                                         </tr>
                                     
 <?php } } ?>
