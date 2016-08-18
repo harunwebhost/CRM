@@ -1,7 +1,7 @@
 
 
 <?php require_once('../template_module/head_section.php'); ?>
-
+ <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 <body>
 
 
@@ -24,22 +24,9 @@
 
 
 
-            <?php 
-
-
-
-                show_leads(logged_user_id(),$_SESSION['login_userntype']);
-
-               
-
-             ?>
-
-             
-
-</div>
-
-                        </div>
-
+            <?php show_leads(logged_user_id(),$_SESSION['login_userntype']); ?>
+              <?php require_once('new_lead_form.php'); ?> 
+               <?php require_once('free_tail_form.php'); ?>
                  </div>
 
  
@@ -49,7 +36,7 @@
    
 
    <script type="text/javascript">
-
+/*
   $(document).ready(function(){
 
     $("#sel1").change(function(){
@@ -73,7 +60,47 @@
     });
 
   });
+*/
+
 
 
 
 </script>
+
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
+
+<script>
+
+         $(function() {
+
+            $( "#start" ).datepicker({
+
+               showWeek:true,
+
+               yearSuffix:"-CE",
+
+               showAnim: "slide",
+
+                dateFormat: "mm-dd-yy",
+
+              minDate: '0', 
+
+            });
+
+
+
+            $( "#end" ).datepicker({
+
+               showWeek:true,
+
+               yearSuffix:"-CE",
+
+               showAnim: "slide",
+
+               dateFormat: "mm-dd-yy",
+
+                minDate: '0', 
+
+            });

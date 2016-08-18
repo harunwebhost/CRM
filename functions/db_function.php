@@ -194,6 +194,9 @@ function show_leads($emp_id,$user_type){
                                         <li class="divider"></li>
                                         <li><a href="#" data-toggle="modal" data-target="#lead_modal" data-whatever="@mdo"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a>
                                         </li>
+
+                                         <li><a href="#" data-toggle="modal" data-target="#free_trail" data-whatever="@mdo"><i class="fa fa-plus" aria-hidden="true"></i> Add Free Trail</a>
+                                        </li>
                                        
                                         <li class="divider"></li>
                                       
@@ -681,9 +684,10 @@ function show_free_trail($emp_id,$user_type){
         $date_to_convert=explode('-', $date);
         return  $date_to_convert['2']."-".$date_to_convert[1]."-".$date_to_convert[0];
     }
-    
-
-
-
-
- ?>
+     function get_inserted_id($sql_crm_lead){
+         $connection=db_connection();
+         $insert_crm=execute_sql_query($sql_crm_lead);
+        echo  mysqli_insert_id($connection);
+        die();
+    }
+?>
