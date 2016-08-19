@@ -39,26 +39,23 @@ $count=sql_fetch_num_rows($run_dublicate);
             {
 
      	$sql_crm_lead="INSERT INTO crm_leads VALUES(NULL,'$lead_name','$lead_email','$lead_mobile','$lead_city','call','$logged_user_id','Free trail','$logged_user',now(),'$ip')"; 	
-          $insert_crm=execute_sql_query($sql_crm_lead);
-          	/*Fetch The last Inserted crm_lead_id*/
-
-          	 $lead_id=get_inserted_id($sql_crm_lead);
-
-			$requested_plan=sql_injection($_POST['requested_plan']);
+          
+				$get_latest_lead_id=get_inserted_id($sql_crm_lead);
+				$requested_plan=sql_injection($_POST['requested_plan']);
 
 			$demostart=sql_injection($_POST['start']);
 
 			$demoend=sql_injection($_POST['end']);
 
-			$crm_demousers="INSERT INTO crm_demousers VALUES (null,'$lead_id','$requested_plan',now(),'$demostart','$demoend','$logged_user_id','$user_comments')";
-			execute_sql_query($sql_crm_lead);
+			echo $crm_demousers="INSERT INTO crm_demousers VALUES (null,'$get_latest_lead_id','$requested_plan',now(),'$demostart','$demoend','$logged_user_id','$user_comments')";
+			execute_sql_query($crm_demousers);
 
 			
 
             if($_SESSION['login_userntype']=="master"){
-                  page_redirection('../master/index.php',"Record Is Insertd");
+                 // page_redirection('../master/index.php',"Record Is Insertd");
               }else{
-                 page_redirection('../employees/index.php',"Record Is Insertd");
+               //  page_redirection('../employees/index.php',"Record Is Insertd");
               } 
            }
    ?>

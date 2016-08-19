@@ -685,9 +685,17 @@ function show_free_trail($emp_id,$user_type){
         return  $date_to_convert['2']."-".$date_to_convert[1]."-".$date_to_convert[0];
     }
      function get_inserted_id($sql_crm_lead){
-         $connection=db_connection();
-         $insert_crm=execute_sql_query($sql_crm_lead);
-        echo  mysqli_insert_id($connection);
-        die();
+      
+       
+       $conn = db_connection();
+                
+                    if (mysqli_query($conn, $sql_crm_lead)) {
+                        $last_id = mysqli_insert_id($conn);
+                        return  $last_id;
+                    } else {
+                        echo "Error: " . $sql_crm_lead . "<br>" . mysqli_error($conn);
+                    }
+       
+       
     }
 ?>
